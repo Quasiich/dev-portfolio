@@ -11,7 +11,7 @@
   <h3>Hello iam Erik</h3>
   <div class="underscore mb-m"></div>
   <h1>I'm a upcoming web-developer</h1>
-  <h1 class="dark-grey">fueled by coffee</h1>
+  <h1 class="dark-grey mb-m">fueled by coffee</h1>
   <Button {onclick}>Lets talk</Button>
 </section>
 
