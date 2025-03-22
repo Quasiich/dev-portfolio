@@ -6,6 +6,12 @@
   function onclick() {
     goto("/#contact-form");
   }
+
+  interface AboutMeProps {
+    workExperience: SanityWorkExperience[];
+  }
+
+  let { workExperience }: AboutMeProps = $props();
 </script>
 
 <section class="about-me mt-l">
@@ -39,7 +45,7 @@
       <Button className="mt-m" {onclick}>Tell me about your project</Button>
     </div>
   </div>
-  <ExperienceTable />
+  <ExperienceTable {workExperience} />
 </section>
 
 <style>
