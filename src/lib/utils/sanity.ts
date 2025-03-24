@@ -21,10 +21,10 @@ export function processProjectEntries(rawProject: SanityProject) {
     stack: rawProject.techStack,
     projectImageUrl,
     slug: rawProject.slug,
-    // content: Array<ProcessedTextContent | ProcessedImageContent>;
+    content: rawProject.content.map(processProjectContent),
   };
-
-  return processedProject;
+  
+  return processedProject
 }
 
 function processProjectContent(content: RawTextContent | RawImageContent) {
@@ -35,6 +35,15 @@ function processProjectContent(content: RawTextContent | RawImageContent) {
       style: content.style,
       textToRender: content.children.map((elem) => elem.text).join("\n"),
     };
+    return processedTextContent
   } else {
+    const builder = ImageUrlBuilder(sanityClient);
+    const projectImageUrl = builder.image(content).url();
+
+    const processedImage: ProcessedImageContent = {
+      type: "image",
+      url: projectImageUrl,
+    }
+    return processedImage
   }
 }
