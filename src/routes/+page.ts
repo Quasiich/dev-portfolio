@@ -11,16 +11,10 @@ export const load: PageLoad = async () => {
     "*[_type == 'project']"
   );
 
-  console.log("before")
-  console.log(rawProjects[0].content);
-
   const projects = rawProjects.map(processProjectEntries);
-
-  console.log("after")
-  console.log(projects[0].content)
-
 
   return {
     workExperience,
+    projects
   };
 };
