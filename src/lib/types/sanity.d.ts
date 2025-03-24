@@ -16,10 +16,10 @@ type SanityProject = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  company?: string;
-  slug?: string;
-  image?: {
+  name: string;
+  company: string;
+  slug: string;
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -30,8 +30,8 @@ type SanityProject = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  date?: string;
-  content?: Array<RawTextContent | RawImageContent>;
+  date: string;
+  content: Array<RawTextContent | RawImageContent>;
   techStack?: Array<string>;
 };
 
@@ -70,7 +70,7 @@ interface RawImageContent {
 interface ProcessedProject {
   name: string;
   company: string;
-  dateAccomplished: string;
+  date: string;
   stack: string[];
   projectImageUrl: string;
   slug: string;
