@@ -71,7 +71,7 @@ interface ProcessedProject {
   name: string;
   company: string;
   date: string;
-  tack: string[];
+  stack: string[];
   projectImageUrl: string;
   slug: string;
   content: Array<ProcessedTextContent | ProcessedImageContent>;
