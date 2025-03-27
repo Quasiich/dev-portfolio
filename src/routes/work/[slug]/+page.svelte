@@ -10,8 +10,6 @@
       return style;
     }
   }
-
-  $inspect(data);
 </script>
 
 <main class="default-margin work-page">

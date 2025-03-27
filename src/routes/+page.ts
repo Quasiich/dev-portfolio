@@ -11,10 +11,15 @@ export const load: PageLoad = async () => {
     "*[_type == 'project']"
   );
 
+  const skills: Skill[] = await sanityClient.fetch(
+    `*[_type == 'skills'][0].skillsList`
+  );
+
   const projects = rawProjects.map(processProjectEntries);
 
   return {
     workExperience,
-    projects
+    projects,
+    skills,
   };
 };

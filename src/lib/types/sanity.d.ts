@@ -35,6 +35,19 @@ type SanityProject = {
   techStack?: Array<string>;
 };
 
+type Skills = {
+  _id: string;
+  _type: "skills";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  skillsList: Array<{
+    name: string;
+    iconClass: string;
+    _key: string;
+  }>;
+};
+
 interface RawTextContent {
   children: Array<{
     marks?: Array<string>;
@@ -87,4 +100,10 @@ interface ProcessedImageContent {
   type: "image";
   url: string;
   alt?: string;
+}
+
+interface Skill {
+  name: string;
+  iconClass: string;
+  _key: string;
 }
