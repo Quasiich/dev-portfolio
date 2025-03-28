@@ -4,6 +4,7 @@
     AboutMe,
     MyWorkSection,
     SkillsSection,
+    ContactSection,
   } from "$components";
 
   const { data } = $props();
@@ -16,3 +17,4 @@
 <AboutMe {workExperience} />
 <MyWorkSection {projects} />
 <SkillsSection {skills} />
+<ContactSection />
