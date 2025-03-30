@@ -1,19 +1,53 @@
 <script lang="ts">
   import { SectionHeadline, Button } from "$components";
 
+  let contactName = $state("");
+  let contactMail = $state("");
+  let contactInformation = $state("");
+  let isFormInvalid = $state(false);
+
+  $inspect(isFormInvalid);
+
   function onSubmit(event: Event) {
     event.preventDefault();
-    console.log(event);
+
+    if (contactMail && contactName && contactInformation) {
+    } else {
+      isFormInvalid = true;
+    }
+
+    console.log({ contactMail, contactName, contactInformation });
   }
+
+  $effect(() => {
+    if (contactName || contactMail || contactInformation) {
+      isFormInvalid = false;
+    }
+  });
 </script>
 
 <section class="mt-l">
   <SectionHeadline sectionName="contact-form">Lets Talk</SectionHeadline>
   <div class="form-container default-margin mt-m">
     <form action="">
-      <input class="text-input mb-s" placeholder="Your Name" />
-      <input class="text-input mb-s" placeholder="Your Email" />
-      <textarea name="" placeholder="Whats on your mind?"></textarea>
+      <input
+        class={`text-input mb-s`}
+        class:input-error={isFormInvalid && !Boolean(contactName.length)}
+        placeholder="Your Name"
+        bind:value={contactName}
+      />
+      <input
+        class="text-input mb-s"
+        class:input-error={isFormInvalid && !Boolean(contactMail.length)}
+        placeholder="Your Email"
+        bind:value={contactMail}
+      />
+      <textarea
+        name=""
+        class:input-error={isFormInvalid && !Boolean(contactInformation.length)}
+        placeholder="Whats on your mind?"
+        bind:value={contactInformation}
+      ></textarea>
       <Button onclick={onSubmit}>Send it!</Button>
     </form>
     <div class="form-text">
@@ -86,12 +120,12 @@
   }
 
   .input-error {
-    background-color: rgba(rgba(214, 47, 47, 0.665), green, blue, alpha);
+    background-color: rgba(214, 47, 47, 0.665);
   }
 
-  .input-error::placeholder {
+  /* .input-error::placeholder {
     color: white;
-  }
+  } */
 
   .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
