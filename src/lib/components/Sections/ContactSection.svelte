@@ -1,22 +1,34 @@
 <script lang="ts">
   import { SectionHeadline, Button } from "$components";
 
-  let contactName = $state("");
-  let contactMail = $state("");
-  let contactInformation = $state("");
+  let contactName = $state("Erik");
+  let contactMail = $state("erik@gmail.com");
+  let contactInformation = $state("hella lit");
   let isFormInvalid = $state(false);
 
   $inspect(isFormInvalid);
 
-  function onSubmit(event: Event) {
+  async function onSubmit(event: Event) {
     event.preventDefault();
 
     if (contactMail && contactName && contactInformation) {
+      try {
+        const response =  await fetch("/api/send-mail", {
+        method: "POST",
+        body: JSON.stringify({
+          contactName,
+          contactMail,
+          contactInformation,
+        }),
+      headers: {'Content-Type': 'application.json'}
+      })
+      console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
     } else {
       isFormInvalid = true;
     }
-
-    console.log({ contactMail, contactName, contactInformation });
   }
 
   $effect(() => {
