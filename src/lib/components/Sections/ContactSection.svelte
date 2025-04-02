@@ -5,14 +5,17 @@
   let contactMail = $state("erik@gmail.com");
   let contactInformation = $state("hella lit");
   let isFormInvalid = $state(false);
+  let isEmailSent = $state(false);
+  let showErrorMessage = $state(false);
+  let isLoading = $state(false)
 
-  $inspect(isFormInvalid);
+  $inspect(isEmailSent);
 
   async function onSubmit(event: Event) {
     event.preventDefault();
 
     if (contactMail && contactName && contactInformation) {
-      try {
+      isLoading = true;
         const response =  await fetch("/api/send-mail", {
         method: "POST",
         body: JSON.stringify({
@@ -22,14 +25,16 @@
         }),
       headers: {'Content-Type': 'application.json'}
       })
-      console.log(response)
-      } catch (err) {
-        console.log(err)
+      isLoading: false
+      if(response.ok) {
+        isEmailSent = true;
+      } else {
+        showErrorMessage = true
       }
     } else {
       isFormInvalid = true;
     }
-  }
+    }
 
   $effect(() => {
     if (contactName || contactMail || contactInformation) {
@@ -41,6 +46,19 @@
 <section class="mt-l">
   <SectionHeadline sectionName="contact-form">Lets Talk</SectionHeadline>
   <div class="form-container default-margin mt-m">
+    {#if isEmailSent}
+    <div class="spinner-container">
+      <h3>Thanks for getting in touch. I will reply as soon as possible!</h3>
+    </div>
+    {:else if isLoading}
+    <div class="spinner-container">
+      <div class="spinner">
+      </div>
+      <h3>Sending of contact form ongoing ...</h3>
+    </div>
+    {:else if showErrorMessage}
+    <h3>There seems to be a problem with the mail servers.</h3>
+    {:else}
     <form action="">
       <input
         class={`text-input mb-s`}
@@ -75,6 +93,7 @@
         from you!
       </p>
     </div>
+    {/if}
   </div>
 </section>
 
