@@ -1,13 +1,13 @@
 <script lang="ts">
   import { SectionHeadline, Button } from "$components";
 
-  let contactName = $state("Erik");
-  let contactMail = $state("erik@gmail.com");
-  let contactInformation = $state("hella lit");
+  let contactName = $state("");
+  let contactMail = $state("");
+  let contactInformation = $state("");
   let isFormInvalid = $state(false);
   let isEmailSent = $state(false);
   let showErrorMessage = $state(false);
-  let isLoading = $state(false)
+  let isLoading = $state(false);
 
   $inspect(isEmailSent);
 
@@ -16,25 +16,25 @@
 
     if (contactMail && contactName && contactInformation) {
       isLoading = true;
-        const response =  await fetch("/api/send-mail", {
+      const response = await fetch("/api/send-mail", {
         method: "POST",
         body: JSON.stringify({
           contactName,
           contactMail,
           contactInformation,
         }),
-      headers: {'Content-Type': 'application.json'}
-      })
-      isLoading: false
-      if(response.ok) {
+        headers: { "Content-Type": "application.json" },
+      });
+      isLoading: false;
+      if (response.ok) {
         isEmailSent = true;
       } else {
-        showErrorMessage = true
+        showErrorMessage = true;
       }
     } else {
       isFormInvalid = true;
     }
-    }
+  }
 
   $effect(() => {
     if (contactName || contactMail || contactInformation) {
@@ -47,52 +47,52 @@
   <SectionHeadline sectionName="contact-form">Lets Talk</SectionHeadline>
   <div class="form-container default-margin mt-m">
     {#if isEmailSent}
-    <div class="spinner-container">
-      <h3>Thanks for getting in touch. I will reply as soon as possible!</h3>
-    </div>
-    {:else if isLoading}
-    <div class="spinner-container">
-      <div class="spinner">
+      <div class="spinner-container">
+        <h3>Thanks for getting in touch. I will reply as soon as possible!</h3>
       </div>
-      <h3>Sending of contact form ongoing ...</h3>
-    </div>
+    {:else if isLoading}
+      <div class="spinner-container">
+        <div class="spinner"></div>
+        <h3>Sending of contact form ongoing ...</h3>
+      </div>
     {:else if showErrorMessage}
-    <h3>There seems to be a problem with the mail servers.</h3>
+      <h3>There seems to be a problem with the mail servers.</h3>
     {:else}
-    <form action="">
-      <input
-        class={`text-input mb-s`}
-        class:input-error={isFormInvalid && !Boolean(contactName.length)}
-        placeholder="Your Name"
-        bind:value={contactName}
-      />
-      <input
-        class="text-input mb-s"
-        class:input-error={isFormInvalid && !Boolean(contactMail.length)}
-        placeholder="Your Email"
-        bind:value={contactMail}
-      />
-      <textarea
-        name=""
-        class:input-error={isFormInvalid && !Boolean(contactInformation.length)}
-        placeholder="Whats on your mind?"
-        bind:value={contactInformation}
-      ></textarea>
-      <Button onclick={onSubmit}>Send it!</Button>
-    </form>
-    <div class="form-text">
-      <h3 class="bold mb-s">Lets bring your ideas to Life</h3>
-      <p>
-        Every great project starts with an idea — big or small. Whether you have
-        a fully thought-out concept or just a rough vision, I’d love to hear all
-        about it! I’m always excited to learn about new ideas and explore how we
-        can bring them to reality together. Feel free to share as many details
-        as you like — your goals, challenges, or even just a general direction.
-        I’ll review your message and get back to you as soon as possible. Let’s
-        turn your vision into something amazing! I’m looking forward to hearing
-        from you!
-      </p>
-    </div>
+      <form action="">
+        <input
+          class={`text-input mb-s`}
+          class:input-error={isFormInvalid && !Boolean(contactName.length)}
+          placeholder="Your Name"
+          bind:value={contactName}
+        />
+        <input
+          class="text-input mb-s"
+          class:input-error={isFormInvalid && !Boolean(contactMail.length)}
+          placeholder="Your Email"
+          bind:value={contactMail}
+        />
+        <textarea
+          name=""
+          class:input-error={isFormInvalid &&
+            !Boolean(contactInformation.length)}
+          placeholder="Whats on your mind?"
+          bind:value={contactInformation}
+        ></textarea>
+        <Button onclick={onSubmit}>Send it!</Button>
+      </form>
+      <div class="form-text">
+        <h3 class="bold mb-s">Lets bring your ideas to Life</h3>
+        <p>
+          Every great project starts with an idea — big or small. Whether you
+          have a fully thought-out concept or just a rough vision, I’d love to
+          hear all about it! I’m always excited to learn about new ideas and
+          explore how we can bring them to reality together. Feel free to share
+          as many details as you like — your goals, challenges, or even just a
+          general direction. I’ll review your message and get back to you as
+          soon as possible. Let’s turn your vision into something amazing! I’m
+          looking forward to hearing from you!
+        </p>
+      </div>
     {/if}
   </div>
 </section>
